@@ -1,6 +1,16 @@
 {
-    "require": {
-        "react/react": "^0.4.2",
-        "react/filesystem": "^0.1.2"
+  "name": "vendor_name/package_name",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "author's name",
+      "email": "email@example.com"
     }
+  ],
+  "require": {
+    "react/react": "^1.0",
+    "react/http": "^0.8.4"
+  }
 }

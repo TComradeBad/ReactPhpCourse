@@ -1,0 +1,6 @@
+/.idea/
+/nbproject/
+*.log
+/vendor/
+composer.phar
+nohup.out
