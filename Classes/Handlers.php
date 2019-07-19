@@ -12,10 +12,21 @@ use Twig_Environment;
 
 class Handlers
 {
-
+    /**
+     * @var array
+     */
     private static $handlers;
+
+    /**
+     * @var Twig_Loader_Filesystem
+     */
     private static $loader;
+
+    /**
+     * @var Twig_Environment
+     */
     public static $twig;
+
 
     public static function Init($twigLoader, $cacheDirectory)
     {
@@ -30,6 +41,11 @@ class Handlers
     {
         self::$handlers[$handlerName] = $handlerFunction;
 
+    }
+
+    public static function page($pageName,$pageArray = [])
+    {
+        return self::$twig->render($pageName,$pageArray);
     }
 
     public static function get()
