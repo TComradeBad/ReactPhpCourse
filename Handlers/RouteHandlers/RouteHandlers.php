@@ -15,6 +15,6 @@ Handlers::addHandler("tasks",
 Handlers::addHandler("mainpage",
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
-        return new \React\Http\Response(200, [],
+        return new \React\Http\Response(200, ["Content-Type" => "text/html"],
         Handlers::page("mainpage.html"));
     });
