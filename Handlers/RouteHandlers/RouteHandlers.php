@@ -1,7 +1,7 @@
 <?php
 use tcb\Classes\Handlers;
 
-Handlers::Init(directory.'/Resourches/Html',false);
+Handlers::Init(__DIR__.'/../../Resourches/Html',false);
 
 
 Handlers::addHandler("tasks",
