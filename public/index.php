@@ -12,10 +12,9 @@ $server = new \React\Http\Server(function (\Psr\Http\Message\ServerRequestInterf
         case FastRoute\Dispatcher::NOT_FOUND:
             return new \React\Http\Response(404);
         case FastRoute\Dispatcher::FOUND:
-            return $routeInfo[1]($request);
+            return $routeInfo[1]($request,...array_values($routeInfo[2]));
     }
 });
-
 
 $socket = new \React\Socket\Server("192.168.33.10:8080",$loop);
 

@@ -10,6 +10,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
 
     $routes->get("/",Handlers::get()["mainpage"]);
 
+    $routes->get('/css/{cssname}',Handlers::get()["css"]);
 
 
 });
