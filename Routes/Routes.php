@@ -1,7 +1,7 @@
 <?php
 
 use tcb\Classes\Handlers;
-require directory."/Handlers/RouteHandlers/RouteHandlers.php";
+require __DIR__."/../Handlers/RouteHandlers/RouteHandlers.php";
 
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routes)

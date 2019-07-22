@@ -1,13 +1,13 @@
 <?php
 use tcb\Classes\Handlers;
 
-Handlers::Init(directory.'/Resourches/Html',directory.'/TwigCache');
+Handlers::Init(directory.'/Resourches/Html',false);
 
 
 Handlers::addHandler("tasks",
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
-        return new \React\Http\Response(200,["Content-Type" => "text/html" ],
+        return new \React\Http\Response(200,["Content-Type" => "text/richtext" ],
         "task page");
     });
 

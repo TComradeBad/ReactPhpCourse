@@ -1,8 +1,7 @@
 <?php
 
-define("directory","/var/www/ReactPhpProject/ReactPhpCourse");
-require directory."/vendor/autoload.php";
-require directory."/Routes/Routes.php";
+require __DIR__."/../vendor/autoload.php";
+require __DIR__."/../Routes/Routes.php";
 
 $loop = \React\EventLoop\Factory::create();
 
