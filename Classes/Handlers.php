@@ -17,25 +17,7 @@ class Handlers
      */
     private static $handlers;
 
-    /**
-     * @var Twig_Loader_Filesystem
-     */
-    private static $loader;
 
-    /**
-     * @var Twig_Environment
-     */
-    public static $twig;
-
-
-    public static function Init($twigLoader, $cacheDirectory)
-    {
-        self::$handlers = array();
-        self::$loader = new Twig_Loader_Filesystem( $twigLoader);
-        self::$twig = new Twig_Environment(self::$loader, array(
-            'cache' => $cacheDirectory,
-        ));
-    }
 
     public static function addHandler($handlerName,callable $handlerFunction)
     {
@@ -43,10 +25,6 @@ class Handlers
 
     }
 
-    public static function page($pageName,$pageArray = [])
-    {
-        return self::$twig->render($pageName,$pageArray);
-    }
 
     public static function get()
     {

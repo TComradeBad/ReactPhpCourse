@@ -2,7 +2,7 @@
 
 use tcb\Classes\Handlers;
 require __DIR__."/../Handlers/RouteHandlers/RouteHandlers.php";
-
+require __DIR__."/../Handlers/MainHandlers/MainHandlers.php";
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routes)
 {
@@ -12,5 +12,6 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
 
     $routes->get('/css/{cssname}',Handlers::get()["css"]);
 
+    $routes->get('/image/{imagename}',Handlers::get()["image"]);
 
 });
