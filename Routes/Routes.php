@@ -14,4 +14,5 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
 
     $routes->get('/image/{imagename}',Handlers::get()["image"]);
 
+    $routes->get('/register',Handlers::get()["register"]);
 });

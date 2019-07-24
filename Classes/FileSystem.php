@@ -54,7 +54,7 @@ class FileSystem
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public  function page($pageName,$pageArray = array())
+    public function page($pageName,$pageArray = array())
     {
         return $this->twig->render($pageName,$pageArray);
     }
