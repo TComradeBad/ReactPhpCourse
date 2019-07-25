@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "acc9c85c3da8bfb9f49deecbb897c007",
-    "content-hash": "0b532256d493323b87b8730a89fb1716",
+    "hash": "f77e94d91fa229f502caf80a3def30fb",
+    "content-hash": "73dccfecab1b9ddbf31a8c633b17885f",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -727,6 +727,41 @@
             "time": "2019-02-06 07:57:58"
         },
         {
+            "name": "tcomradebad/querybuilder",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TComradeBad/QueryBuilderPhp.git",
+                "reference": "525a833349eb5b041db265c06fe2451f73298b7a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TComradeBad/QueryBuilderPhp/zipball/525a833349eb5b041db265c06fe2451f73298b7a",
+                "reference": "525a833349eb5b041db265c06fe2451f73298b7a",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "tcbQB\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "TComradeBad"
+                }
+            ],
+            "description": "my query builder for courses",
+            "time": "2019-07-25 16:28:03"
+        },
+        {
             "name": "twbs/bootstrap",
             "version": "v4.3.1",
             "source": {
@@ -846,10 +881,14 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "tcomradebad/querybuilder": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-pdo": "^0.0.0"
+    },
     "platform-dev": []
 }

@@ -1,7 +1,7 @@
 {
   "name": "vendor_name/package_name",
   "description": "description_text",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "license": "proprietary",
   "authors": [
     {
@@ -14,7 +14,9 @@
     "react/http": "^0.8.4",
     "nikic/fast-route": "^1.3",
     "twig/twig": "1.*",
-    "twbs/bootstrap": "4.3.1"
+    "twbs/bootstrap": "4.3.1",
+    "ext-pdo": "^0.0.0",
+    "tcomradebad/querybuilder": "dev-master"
 
   },
   "autoload": {

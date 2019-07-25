@@ -25,10 +25,24 @@ Handlers::addHandler("mainpage",
                 )]));
     });
 
-Handlers::addHandler("register",
+Handlers::addHandler("register-get",
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
         $dir = new \tcb\Classes\FileSystem();
         return new \React\Http\Response(200, ["Content-Type" => "text/html"],
             $dir->page("register.html"));
     });
+
+Handlers::addHandler('register-post',
+    function (\Psr\Http\Message\ServerRequestInterface $request)
+    {
+        $dir = new \tcb\Classes\FileSystem();
+        $result = $request->getParsedBody();
+        print_r($result);
+        $user = new \tcb\Classes\User($result['username'],$result['email'],$result["password"]);
+        $user->pushToDB();
+        return new \React\Http\Response(200,["Content-Type" => "text/html"],
+            $dir->page('redirect.html',
+                ["destination" => "http://192.168.33.10:8080/"]));
+    }
+    );

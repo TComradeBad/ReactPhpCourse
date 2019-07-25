@@ -1,14 +1,16 @@
 <?php
 return [
-    "db" => "mysql",
+    "db_type" => "mysql",
 
-    "host" => '127.0.0.1',
+    "db_name" => "reactsite",
 
-    "user" => "react_user",
+    "host" => "127.0.0.1",
 
-    "password" => "aonother_one_bite_the_dust",
+    "user" => "reactsite_user",
 
-    "charser" => "utf"
+    "password" => "bye_bye_american_pie",
+
+    "charset" => "utf8"
 
 ];
 
