@@ -50,7 +50,7 @@
 <!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter39705265 = new Ya.Metrika({ id:39705265, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/39705265" style="position:absolute; left:-9999px;" alt="Yandex.Metrika" /></div></noscript> <!-- /Yandex.Metrika counter -->
 
 <header>
-    {% block header %}
+
     <div class="collapse bg-dark" id="navbarHeader">
         <div class="container">
             <div class="row">
@@ -59,10 +59,12 @@
                     <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
-                    <h4 class="text-white">Пользователь</h4>
+                    <h4 class="text-white">Пользователь {{username}}</h4>
                     <ul class="list-unstyled">
+                        {% block user_reg %}
                         <li><a href="/register" class="text-white">Регистрация</a></li>
-                        <li><a href="#" class="text-white">Авторизация</a></li>
+                        <li><a href="/auth" class="text-white">Авторизация</a></li>
+                        {% endblock %}
                     </ul>
                 </div>
             </div>
@@ -79,7 +81,7 @@
             </button>
         </div>
     </div>
-    {% endblock %}
+
 </header>
 
 <main role="main">

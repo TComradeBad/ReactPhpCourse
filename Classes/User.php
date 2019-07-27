@@ -23,9 +23,11 @@ class User
      */
     public function __construct($username,$email,$password)
     {
-        $this->username = $username;
-        $this->email = $email;
-        $this->password = $password;
+        $this->username = htmlspecialchars( stripslashes( $username ) );
+        $this->email = htmlspecialchars( stripslashes( $email ) );
+        $this->password = htmlspecialchars(stripslashes( $password ) );
+
+
 
     }
 
@@ -40,11 +42,81 @@ class User
                 ->values([
                     AbstractQuery::sqlString($this->username),
                     AbstractQuery::sqlString($this->email),
-                    AbstractQuery::sqlString($this->password)
+                    AbstractQuery::sqlString(password_hash($this->password,PASSWORD_DEFAULT))
                 ])->get();
             $connection->query($query);
 
         }
     }
 
+    public function nameNotExistInDB()
+    {
+        $builder = new QueryBuilder();
+        $db = new DatabaseService();
+        $connection = $db->connect();
+        if($connection)
+        {
+            $query = $builder->select("user_name")->from(['react_users'])->where()
+                ->equals("user_name",AbstractQuery::sqlString($this->username))->get();
+            $row = $connection->query($query);
+            $row = $row->fetch();
+            if(empty($row['user_name']))
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
+
+    }
+
+    public function emailNotExistInDB()
+    {
+        $builder = new QueryBuilder();
+        $db = new DatabaseService();
+        $connection = $db->connect();
+        if($connection)
+        {
+            $query = $builder->select("email")->from(['react_users'])->where()
+                ->equals("email",AbstractQuery::sqlString($this->email))->get();
+            $row = $connection->query($query);
+            $row = $row->fetch();
+            if(empty($row['email']))
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
+
+    }
+
+    public function vertifyPassword()
+    {
+        $builder = new QueryBuilder();
+        $db = new DatabaseService();
+        $connection = $db->connect();
+        if($connection)
+        {
+            $query = $builder->select("password")->from(['react_users'])->where()
+                ->equals("user_name",AbstractQuery::sqlString($this->username))->get();
+            $row = $connection->query($query);
+            $row = $row->fetch();
+            return password_verify($this->password,$row["password"]);
+        }else
+        {
+            return false;
+        }
+
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
 }

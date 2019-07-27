@@ -1,6 +1,13 @@
 {% extends "layouts/layout.html" %}
 
 {% block title %}Сервис загрузки изображений{% endblock %}
+{% block user_reg %}
+{% if username %}
+<li><a href="/logout" class="text-white">Выйти из аккаунта</a></li>
+{% else %}
+{{parent()}}
+{% endif %}
+{% endblock %}
 {% block imagesfield %}
 {% for image_source in image_array %}
 {% block image %}
