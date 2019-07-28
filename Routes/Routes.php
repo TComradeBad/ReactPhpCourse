@@ -1,6 +1,6 @@
 <?php
 
-use tcb\Classes\Middleware;
+
 use tcb\Classes\Handlers;
 require __DIR__ . "/../Handlers/AllHandlersList.php";
 

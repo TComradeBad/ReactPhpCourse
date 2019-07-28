@@ -50,7 +50,9 @@ class Middleware
         {
             $this->first_middleware = $this;
         }
-        $this->getFirstMiddleware()->last_middleware = $this;
+        $this->getFirstMiddleware()->setLastMiddleware($this);
+
+
     }
 
     /**]
@@ -99,5 +101,12 @@ class Middleware
         return $this->last_middleware;
     }
 
+    /**
+     * @param Middleware $last_middleware
+     */
+    public function setLastMiddleware($last_middleware)
+    {
+        $this->last_middleware = $last_middleware;
+    }
 
 }
