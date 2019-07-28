@@ -5,6 +5,7 @@ use tcb\Classes\Handlers;
 /**
  * Обработка post запроса регистрации пользователя
  */
+/**
 Handlers::addHandler('register-post',
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
@@ -31,6 +32,7 @@ Handlers::addHandler('register-post',
                     ["destination" => "http://192.168.33.10:8080/"]));
         }
     });
+**/
 
 /**
  * Обработка post запроса аутенфикации пользователя

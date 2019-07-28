@@ -1,9 +1,11 @@
 <?php
 
+use tcb\Classes\Middleware;
 use tcb\Classes\Handlers;
 require __DIR__ . "/../Handlers/RouteHandlers/GetHandlers.php";
 require __DIR__ . "/../Handlers/RouteHandlers/PostHandlers.php";
 require __DIR__."/../Handlers/MainHandlers/MainHandlers.php";
+require __DIR__."/../Handlers/Middleware/MiddlewareHandlers;.php";
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routes)
 {
@@ -15,7 +17,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
 
     $routes->get('/register',Handlers::get()["register-get"]);
 
-    $routes->post("/register",Handlers::get()["register-post"]);
+    $routes->post("/register",Middleware::getChain()["register-post"]);
 
     $routes->get("/auth",Handlers::get()["auth-get"]);
 
