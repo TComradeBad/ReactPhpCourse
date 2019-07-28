@@ -7,8 +7,6 @@
  */
 
 namespace tcb\Classes;
-use Twig_Loader_Filesystem;
-use Twig_Environment;
 
 class Handlers
 {
@@ -29,5 +27,14 @@ class Handlers
     public static function get()
     {
         return self::$handlers;
+    }
+
+    public static function addMiddlewareChain($name,Middleware $middleware)
+    {
+        $mid = clone $middleware;
+        $mid -> getLastMiddleware()->addNext(Handlers::get()[$name]);
+        Handlers::addHandler($name,$mid);
+
+
     }
 }

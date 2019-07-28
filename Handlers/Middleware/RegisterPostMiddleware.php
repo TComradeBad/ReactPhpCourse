@@ -40,6 +40,6 @@ $middleware->addNext(function (\Psr\Http\Message\ServerRequestInterface $request
 
 });
 
-Middleware::createChain("register-post",$middleware);
+Middleware::defineChain("register-post",$middleware);
 
 

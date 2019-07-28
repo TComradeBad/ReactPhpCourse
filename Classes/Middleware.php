@@ -25,6 +25,10 @@ class Middleware
     protected $first_middleware;
 
     /**
+     * @var Middleware
+     */
+    protected $last_middleware;
+     /**
      * @param string $request
      * @param callable $next
      * @return mixed
@@ -46,6 +50,7 @@ class Middleware
         {
             $this->first_middleware = $this;
         }
+        $this->getFirstMiddleware()->last_middleware = $this;
     }
 
     /**]
@@ -55,6 +60,7 @@ class Middleware
     public function addNext(callable $function)
     {
         $this->next_function = new Middleware($function,$this->first_middleware);
+
         return $this->next_function;
     }
 
@@ -62,13 +68,13 @@ class Middleware
      * @param string $name
      * @param Middleware $middleware
      */
-    public static function createChain($name ,Middleware $middleware)
+    public static function defineChain($name ,Middleware $middleware)
     {
         self::$middlewareCollection [$name] = $middleware->getFirstMiddleware();
     }
 
     /**
-     * @return callable
+     * @return Middleware
      */
     public function getFirstMiddleware()
     {
@@ -76,8 +82,22 @@ class Middleware
 
     }
 
-    public static function getChain()
+    /**
+     * @param $name
+     * @return Middleware
+     */
+    public static function getChain($name)
     {
-        return self::$middlewareCollection;
+        return self::$middlewareCollection[$name];
     }
+
+    /**
+     * @return Middleware
+     */
+    public function getLastMiddleware()
+    {
+        return $this->last_middleware;
+    }
+
+
 }

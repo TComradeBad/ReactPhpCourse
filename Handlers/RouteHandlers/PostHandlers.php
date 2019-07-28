@@ -1,38 +1,23 @@
 <?php
 
 use tcb\Classes\Handlers;
+ use tcb\Classes\Middleware;
 
-/**
- * Обработка post запроса регистрации пользователя
- */
-/**
-Handlers::addHandler('register-post',
-    function (\Psr\Http\Message\ServerRequestInterface $request)
-    {
-        $dir = new \tcb\Classes\FileSystem();
-        $result = $request->getParsedBody();
-        $user = new \tcb\Classes\User($result['username'],$result["email"],$result["password"]);
-        if(!$user->emailNotExistInDB())
-        {
-            return new \React\Http\Response(200,["Content-Type" => "text/html"],
-                $dir->page('redirect.html',
-                    ["destination" => "http://192.168.33.10:8080/register_email_error"]));
 
-        }else if(!$user->nameNotExistInDB())
-        {
-            return new \React\Http\Response(200,["Content-Type" => "text/html"],
-                $dir->page('redirect.html',
-                    ["destination" => "http://192.168.33.10:8080/register_name_error"]));
+Handlers::addHandler("register-post",function (\Psr\Http\Message\ServerRequestInterface $request, $next){
 
-        }else
-        {
-            $user->pushToDB();
-            return new \React\Http\Response(200,["Content-Type" => "text/html"],
-                $dir->page('redirect.html',
-                    ["destination" => "http://192.168.33.10:8080/"]));
-        }
-    });
-**/
+    $dir = new \tcb\Classes\FileSystem();
+    $result = $request->getParsedBody();
+    $user = new \tcb\Classes\User($result['username'],$result["email"],$result["password"]);
+    $user->pushToDB();
+
+    return new \React\Http\Response(200,["Content-Type" => "text/html"],
+        $dir->page('redirect.html',
+            ["destination" => "http://192.168.33.10:8080/"]));
+
+});
+
+Handlers::addMiddlewareChain("register-post",Middleware::getChain("register-post"));
 
 /**
  * Обработка post запроса аутенфикации пользователя
