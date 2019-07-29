@@ -17,7 +17,7 @@ class Middleware
     /**
      * @var Middleware
      */
-    protected $next_function = null;
+    protected $next_function;
 
     /**
      * @var Middleware
@@ -40,7 +40,7 @@ class Middleware
 
     }
 
-    public function __construct(callable $function, Middleware $first_middleware = null)
+    public function __construct(callable $function = null, Middleware $first_middleware = null)
     {
         $this->function = $function;
         if(isset($first_middleware))
@@ -50,12 +50,17 @@ class Middleware
         {
             $this->first_middleware = $this;
         }
-        $this->getFirstMiddleware()->setLastMiddleware($this);
+        $this->first_middleware->last_middleware = $this;
+
+    }
+
+    public function __clone()
+    {
 
     }
 
 
-    /**]
+    /**
      * @param callable $function
      * @return Middleware
      */
@@ -110,5 +115,9 @@ class Middleware
         $this->last_middleware = $last_middleware;
     }
 
+    public function setFunction(callable $func)
+    {
+       $this->function = $func;
+    }
 
 }

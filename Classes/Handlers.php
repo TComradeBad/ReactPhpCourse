@@ -31,10 +31,9 @@ class Handlers
 
     public static function addMiddlewareChain($name,Middleware $middleware)
     {
-        $mid = clone $middleware;
+        $mid = $middleware;
         $mid -> getLastMiddleware()->addNext(Handlers::get()[$name]);
         Handlers::addHandler($name,$mid);
-
 
     }
 }

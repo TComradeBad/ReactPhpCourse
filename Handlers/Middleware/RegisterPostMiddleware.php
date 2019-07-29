@@ -2,7 +2,8 @@
 
 use tcb\Classes\Middleware;
 
-$middleware = new Middleware(
+$middleware = new \tcb\Classes\MiddlewareFactory();
+$middleware->addFunction(
     function (\Psr\Http\Message\ServerRequestInterface $request, $next)
     {
         $dir = new \tcb\Classes\FileSystem();
@@ -16,7 +17,7 @@ $middleware = new Middleware(
         }else return $next($request);
     });
 
-$middleware->addNext(function (\Psr\Http\Message\ServerRequestInterface $request, $next){
+$middleware->addFunction(function (\Psr\Http\Message\ServerRequestInterface $request, $next){
 
     $dir = new \tcb\Classes\FileSystem();
     $result = $request->getParsedBody();
@@ -29,6 +30,7 @@ $middleware->addNext(function (\Psr\Http\Message\ServerRequestInterface $request
 
     }else return $next($request);
 });
+$middleware = $middleware->createMiddlewareChain();
 Middleware::defineChain("register-post",$middleware);
 
 
