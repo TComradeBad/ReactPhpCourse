@@ -17,7 +17,7 @@ class Middleware
     /**
      * @var Middleware
      */
-    protected $next_function;
+    protected $next_function = null;
 
     /**
      * @var Middleware
@@ -40,7 +40,7 @@ class Middleware
 
     }
 
-    public function __construct(callable $function, callable $first_middleware = null)
+    public function __construct(callable $function, Middleware $first_middleware = null)
     {
         $this->function = $function;
         if(isset($first_middleware))
@@ -52,8 +52,8 @@ class Middleware
         }
         $this->getFirstMiddleware()->setLastMiddleware($this);
 
-
     }
+
 
     /**]
      * @param callable $function
@@ -80,6 +80,7 @@ class Middleware
      */
     public function getFirstMiddleware()
     {
+
         return $this->first_middleware;
 
     }
@@ -108,5 +109,6 @@ class Middleware
     {
         $this->last_middleware = $last_middleware;
     }
+
 
 }
