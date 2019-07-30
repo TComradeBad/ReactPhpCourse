@@ -28,15 +28,24 @@ class Middleware
      * @var Middleware
      */
     protected $last_middleware;
-     /**
-     * @param string $request
-     * @param callable $next
+
+    /**
+     * @param $request
+     * @param callable|null $next
+     * @param mixed ...$params
      * @return mixed
      */
-    public function __invoke($request, callable $next = null)
+    public function __invoke($request, callable $next = null,... $params)
     {
         $func = $this->function;
-        return $func($request,$this->next_function);
+        if(empty($params))
+        {
+            return $func($request,$this->next_function);
+        }else
+        {
+            return $func($request,$this->next_function,...array_values($params));
+        }
+
 
     }
 
@@ -51,11 +60,8 @@ class Middleware
             $this->first_middleware = $this;
         }
         $this->first_middleware->last_middleware = $this;
+        $this->next_function = function(){return new Middleware();};
 
-    }
-
-    public function __clone()
-    {
 
     }
 
@@ -115,6 +121,9 @@ class Middleware
         $this->last_middleware = $last_middleware;
     }
 
+    /**
+     * @param callable $func
+     */
     public function setFunction(callable $func)
     {
        $this->function = $func;

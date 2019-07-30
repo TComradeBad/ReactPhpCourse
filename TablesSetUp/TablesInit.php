@@ -8,7 +8,8 @@ if($connection)
     $qbuilder = new \tcbQB\QueryBuilder\QueryBuilder();
 
 
-    $query = $qbuilder->create('react_users')->integer('id',"NOT NULL AUTO_INCREMENT PRIMARY KEY")
+    $query = $qbuilder->create('react_users')
+        ->integer('id',"NOT NULL AUTO_INCREMENT PRIMARY KEY")
         ->varchar("user_name",255,"UNIQUE")
         ->varchar("email",255,"UNIQUE")
         ->varchar("password",255)
@@ -16,5 +17,11 @@ if($connection)
 
     $connection->query($query);
 
+    $query = $qbuilder->create("users_images")
+        ->integer('id',"NOT NULL AUTO_INCREMENT PRIMARY KEY")
+        ->blob("content","NOT NULL")
+        ->integer("owner_id","NOT NULL")
+        ->get();
 
+    $connection->query($query);
 }

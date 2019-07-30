@@ -1,10 +1,10 @@
 <?php
-use tcb\Classes\Handlers;
-
+use tcb\Classes\HandlerFactory;
+use tcb\Classes\MiddlewareFactory;
 /**
  * Главная страница
  */
-Handlers::addHandler("mainpage",
+HandlerFactory::addHandler("mainpage",
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
         $dir = new \tcb\Classes\FileSystem();
@@ -30,7 +30,7 @@ Handlers::addHandler("mainpage",
 /**
  * Страница регистрации
  */
-Handlers::addHandler("register-get",
+HandlerFactory::addHandler("register-get",
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
         $dir = new \tcb\Classes\FileSystem();
@@ -41,7 +41,7 @@ Handlers::addHandler("register-get",
 /**
  * Страница авторизации
  */
-Handlers::addHandler("auth-get",
+HandlerFactory::addHandler("auth-get",
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
         $dir = new \tcb\Classes\FileSystem();
@@ -52,7 +52,7 @@ Handlers::addHandler("auth-get",
 /**
  * Регистрация с выводом ошибки почты
  */
-Handlers::addHandler("register-email-error",
+HandlerFactory::addHandler("register-email-error",
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
         $dir = new \tcb\Classes\FileSystem();
@@ -66,7 +66,7 @@ Handlers::addHandler("register-email-error",
 /**
  * Регистрация с выводом ошибки имени пользователя
  */
-Handlers::addHandler("register-name-error",
+HandlerFactory::addHandler("register-name-error",
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
         $dir = new \tcb\Classes\FileSystem();
@@ -80,7 +80,7 @@ Handlers::addHandler("register-name-error",
 /**
  * Авторизация с выводом ошибки
  */
-Handlers::addHandler("auth-error",
+HandlerFactory::addHandler("auth-error",
     function (\Psr\Http\Message\ServerRequestInterface $request)
     {
         $dir = new \tcb\Classes\FileSystem();
@@ -91,7 +91,7 @@ Handlers::addHandler("auth-error",
                 ]));
     });
 
-Handlers::addHandler("logout",
+HandlerFactory::addHandler("logout",
      function (\Psr\Http\Message\ServerRequestInterface $request)
      {
          $dir = new \tcb\Classes\FileSystem();
@@ -103,3 +103,22 @@ Handlers::addHandler("logout",
              $dir->page('redirect.html',
                  ["destination" => "http://192.168.33.10:8080/"]));
      });
+
+HandlerFactory::addHandler("user-page",
+    function (\Psr\Http\Message\ServerRequestInterface $request,$user)
+    {
+
+        $dir = new \tcb\Classes\FileSystem();
+        return new \React\Http\Response(200, ["Content-Type" => "text/html"],
+            $dir->page("mainpage.html",
+                [
+                    "username" => $user,
+                    'image_array'=> array(
+                        "https://cdn52.zvooq.com/pic?type=release&id=6352180&size=200x200&ext=jpg",
+                        "https://im0-tub-ru.yandex.net/i?id=44d7bb844c3a61de224c3590a6c279c0&n=13&exp=1",
+                        "image/Heart.jpg",
+                        "image/disk.jpg",
+                        "image/blacksabbath.jpg"
+                    )]));
+    });
+HandlerFactory::addMiddlewareChain("user-page",MiddlewareFactory::getFunctionChain("auth-get"));

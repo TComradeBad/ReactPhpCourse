@@ -1,6 +1,5 @@
 <?php
 
-use tcb\Classes\Middleware;
 use tcb\Classes\MiddlewareFactory;
 $middleware = new MiddlewareFactory();
 $middleware->addFunction(
@@ -17,6 +16,5 @@ $middleware->addFunction(
                     ["destination" => "http://192.168.33.10:8080/auth_error"]));
         }else return $next($request);
     });
-$middleware = $middleware->createMiddlewareChain();
+$middleware->defineFunctionChain("auth-post");
 
-Middleware::defineChain("auth-post",$middleware);

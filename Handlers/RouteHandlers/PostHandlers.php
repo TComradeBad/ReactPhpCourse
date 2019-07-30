@@ -1,10 +1,10 @@
 <?php
 
-use tcb\Classes\Handlers;
- use tcb\Classes\Middleware;
+use tcb\Classes\HandlerFactory;
+use tcb\Classes\MiddlewareFactory;
 
 
-Handlers::addHandler("register-post",function (\Psr\Http\Message\ServerRequestInterface $request, $next){
+HandlerFactory::addHandler("register-post",function (\Psr\Http\Message\ServerRequestInterface $request){
 
     $dir = new \tcb\Classes\FileSystem();
     $result = $request->getParsedBody();
@@ -17,13 +17,13 @@ Handlers::addHandler("register-post",function (\Psr\Http\Message\ServerRequestIn
 
 });
 
-Handlers::addMiddlewareChain("register-post",Middleware::getChain("register-post"));
+HandlerFactory::addMiddlewareChain("register-post",MiddlewareFactory::getFunctionChain("register-post"));
 
 /**
  * Обработка post запроса аутенфикации пользователя
  */
-Handlers::addHandler("auth-post",
-    function (\Psr\Http\Message\ServerRequestInterface $request, $next)
+HandlerFactory::addHandler("auth-post",
+    function (\Psr\Http\Message\ServerRequestInterface $request)
     {
         $dir = new \tcb\Classes\FileSystem();
         $result = $request->getParsedBody();
@@ -37,4 +37,4 @@ Handlers::addHandler("auth-post",
                 ["destination" => "http://192.168.33.10:8080/"]));
     });
 
-Handlers::addMiddlewareChain("auth-post", Middleware::getChain("auth-post"));
+HandlerFactory::addMiddlewareChain("auth-post", MiddlewareFactory::getFunctionChain("auth-post"));

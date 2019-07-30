@@ -10,7 +10,7 @@
     <title>{% block title %}Альбом | Album example for Bootstrap{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
     <style>
@@ -31,7 +31,7 @@
     </style>
 
     <!-- Custom styles for this template -->
-    <link href="css/album.css" rel="stylesheet">
+    <link href="/css/album.css" rel="stylesheet">
     {% endblock %}
 </head>
 
@@ -85,20 +85,9 @@
 </header>
 
 <main role="main">
+    {% block mainaction%}
 
-    <section class="jumbotron text-center">
-        {% block mainaction%}
-        <div class="container">
-            <h1 class="jumbotron-heading">Album example</h1>
-            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-            <p>
-                <a href="#" class="btn btn-primary my-2">Загрузить Изображение</a>
-                <a href="#" class="btn btn-secondary my-2">Мои изображения</a>
-            </p>
-        </div>
-        {% endblock %}
-    </section>
-
+    {% endblock %}
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row">

@@ -1,6 +1,6 @@
 <?php
 
-use tcb\Classes\Handlers;
+use tcb\Classes\HandlerFactory;
 
 
 
@@ -8,7 +8,7 @@ use tcb\Classes\Handlers;
  * Отправка браузеру файлов css
  */
 
-Handlers::addHandler("css",
+HandlerFactory::addHandler("css",
     function (\Psr\Http\Message\ServerRequestInterface $request,$cssfilename)
     {
         $dir = new \tcb\Classes\FileSystem();
@@ -19,7 +19,7 @@ Handlers::addHandler("css",
 /**
  * Отправка браузеру image файлов
  */
-Handlers::addHandler('image',
+HandlerFactory::addHandler('image',
     function (\Psr\Http\Message\ServerRequestInterface $request,$imagefilename)
     {
         $dir = new \tcb\Classes\FileSystem();

@@ -1,6 +1,6 @@
 {% extends "layouts/layout.html" %}
 
-{% block title %}Сервис загрузки изображений{% endblock %}
+{% block title %}Страница пользователя{% endblock %}
 
 {% block user_reg %}
 {% if username %}
@@ -19,7 +19,6 @@
         <p class="lead text-muted">Ты можешь загрузить, или просмотреть свои изображения</p>
         <p>
             <a href="#" class="btn btn-primary my-2">Загрузить Изображение</a>
-            <a href="/user_profile/{{username}}" class="btn btn-secondary my-2">Мои изображения</a>
         </p>
     </div>
 
@@ -30,11 +29,9 @@
 {% endblock %}
 
 {% block imagesfield %}
-
 {% for image_source in image_array %}
 {% block image %}
 {{parent()}}
 {% endblock %}
 {% endfor %}
-
 {% endblock %}
