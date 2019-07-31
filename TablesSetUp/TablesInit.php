@@ -19,7 +19,8 @@ if($connection)
 
     $query = $qbuilder->create("users_images")
         ->integer('id',"NOT NULL AUTO_INCREMENT PRIMARY KEY")
-        ->blob("content","NOT NULL")
+        ->varchar("image_name",255,"NOT NULL")
+        ->varchar("file_name",255,"NOT NULL")
         ->integer("owner_id","NOT NULL")
         ->get();
 

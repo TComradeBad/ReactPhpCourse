@@ -38,3 +38,22 @@ HandlerFactory::addHandler("auth-post",
     });
 
 HandlerFactory::addMiddlewareChain("auth-post", MiddlewareFactory::getFunctionChain("auth-post"));
+
+/**
+ * Отправка картинок в базу данных
+ */
+HandlerFactory::addHandler("image-upload-post",
+    function (\Psr\Http\Message\ServerRequestInterface $request,$user)
+    { $dir = new \tcb\Classes\FileSystem();
+        try{
+        $result = $request->getParsedBody();
+        $uploaded_image = $request->getUploadedFiles()["file"];
+        $image = new \tcb\Classes\Image($uploaded_image,$result["name"],$user);
+        $image->saveImagePushToDb();
+        }catch (Exception $exception){echo $exception->getMessage();}
+        return new \React\Http\Response(200,["Content-Type" => "text/html"],
+            $dir->page('redirect.html',
+                ["destination" => "http://192.168.33.10:8080/$user/user_profile"]));
+
+    });
+HandlerFactory::addMiddlewareChain("image-upload-post",MiddlewareFactory::getFunctionChain("auth-get"));

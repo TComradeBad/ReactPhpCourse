@@ -110,15 +110,28 @@ HandlerFactory::addHandler("user-page",
 
         $dir = new \tcb\Classes\FileSystem();
         return new \React\Http\Response(200, ["Content-Type" => "text/html"],
-            $dir->page("mainpage.html",
+            $dir->page("userpage.html",
                 [
                     "username" => $user,
                     'image_array'=> array(
                         "https://cdn52.zvooq.com/pic?type=release&id=6352180&size=200x200&ext=jpg",
                         "https://im0-tub-ru.yandex.net/i?id=44d7bb844c3a61de224c3590a6c279c0&n=13&exp=1",
-                        "image/Heart.jpg",
-                        "image/disk.jpg",
-                        "image/blacksabbath.jpg"
+                        "/image/Heart.jpg",
+                        "/image/disk.jpg",
+                        "/image/blacksabbath.jpg"
                     )]));
     });
 HandlerFactory::addMiddlewareChain("user-page",MiddlewareFactory::getFunctionChain("auth-get"));
+
+HandlerFactory::addHandler("image-upload-get",
+    function (\Psr\Http\Message\ServerRequestInterface $request, $user)
+    {
+        $dir = new \tcb\Classes\FileSystem();
+        return new \React\Http\Response(200, ["Content-Type" => "text/html"],
+            $dir->page("image_upload.html",
+                [
+                    "username" => $user,
+                ]));
+
+    });
+HandlerFactory::addMiddlewareChain("image-upload-get",MiddlewareFactory::getFunctionChain("auth-get"));

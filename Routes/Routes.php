@@ -29,5 +29,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
 
     $routes->get("/logout",HandlerFactory::get()["logout"]);
 
-    $routes->get("/user_profile/{user}",HandlerFactory::get()["user-page"]);
+    $routes->get("/{user}/user_profile",HandlerFactory::get()["user-page"]);
+
+    $routes->get("/{user}/image_upload",HandlerFactory::get()["image-upload-get"]);
+
+    $routes->post("/{user}/image_upload",HandlerFactory::get()["image-upload-post"]);
 });

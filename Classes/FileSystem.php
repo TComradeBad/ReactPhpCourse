@@ -1,6 +1,8 @@
 <?php
 
 namespace tcb\Classes;
+use Psr\Http\Message\UploadedFileInterface;
+use React\Http\Io\UploadedFile;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
@@ -69,6 +71,20 @@ class FileSystem
         return file_get_contents($this->getdir("image_dir")."/$imagename");
     }
 
+    public function saveImage(UploadedFile $file,$innerdir = null)
+    {
+            $stream = $file->getStream();
+            $image = $stream->getContents();
+            if(isset($innerdir))
+            {
+                mkdir($this->getdir("image_dir")."/$innerdir");
+                file_put_contents($this->getdir("image_dir")."/$innerdir/".$file->getClientFilename(),$image);
+            }else
+            {
+                file_put_contents($this->getdir("image_dir")."/".$file->getClientFilename(),$image);
+            }
+
+    }
 
 
 }
