@@ -11,7 +11,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
 
     $routes->get('/css/{cssname}',HandlerFactory::get()["css"]);
 
-    $routes->get('/image/{imagename}',HandlerFactory::get()["image"]);
+    $routes->get('/image/{imagename:.+}',HandlerFactory::get()["image"]);
+
+    $routes->get('/view[/{name}[/{id:\d+}]]',HandlerFactory::get()["image-view"]);
 
     $routes->get('/register',HandlerFactory::get()["register-get"]);
 

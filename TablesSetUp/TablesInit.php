@@ -21,8 +21,10 @@ if($connection)
         ->integer('id',"NOT NULL AUTO_INCREMENT PRIMARY KEY")
         ->varchar("image_name",255,"NOT NULL")
         ->varchar("file_name",255,"NOT NULL")
+        ->integer("views_count")
         ->integer("owner_id","NOT NULL")
         ->get();
+
 
     $connection->query($query);
 }

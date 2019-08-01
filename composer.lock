@@ -52,16 +52,16 @@
         },
         {
             "name": "nikic/fast-route",
-            "version": "v1.3.0",
+            "version": "v1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/FastRoute.git",
-                "reference": "181d480e08d9476e61381e04a71b34dc0432e812"
+                "reference": "dd929b38a127ca763f9dc4896320ebeb0c1fdc08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/181d480e08d9476e61381e04a71b34dc0432e812",
-                "reference": "181d480e08d9476e61381e04a71b34dc0432e812",
+                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/dd929b38a127ca763f9dc4896320ebeb0c1fdc08",
+                "reference": "dd929b38a127ca763f9dc4896320ebeb0c1fdc08",
                 "shasum": ""
             },
             "require": {
@@ -94,11 +94,11 @@
                 "router",
                 "routing"
             ],
-            "time": "2018-02-13 20:26:39"
+            "time": "2018-08-19 11:46:04"
         },
         {
             "name": "psr/http-message",
-            "version": "1.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
@@ -322,16 +322,16 @@
         },
         {
             "name": "react/promise",
-            "version": "v2.7.1",
+            "version": "2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
-                "reference": "31ffa96f8d2ed0341a57848cbb84d88b89dd664d"
+                "reference": "f16348c33d45ac47a838a70304014ee5079b73c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise/zipball/31ffa96f8d2ed0341a57848cbb84d88b89dd664d",
-                "reference": "31ffa96f8d2ed0341a57848cbb84d88b89dd664d",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/f16348c33d45ac47a838a70304014ee5079b73c8",
+                "reference": "f16348c33d45ac47a838a70304014ee5079b73c8",
                 "shasum": ""
             },
             "require": {
@@ -364,7 +364,7 @@
                 "promise",
                 "promises"
             ],
-            "time": "2019-01-07 21:25:54"
+            "time": "2019-06-21 14:44:24"
         },
         {
             "name": "react/promise-stream",
@@ -670,7 +670,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.11.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -732,12 +732,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/TComradeBad/QueryBuilderPhp.git",
-                "reference": "525a833349eb5b041db265c06fe2451f73298b7a"
+                "reference": "fa775676fc26b9bfa6a53c66dee7a2c02484b36f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TComradeBad/QueryBuilderPhp/zipball/525a833349eb5b041db265c06fe2451f73298b7a",
-                "reference": "525a833349eb5b041db265c06fe2451f73298b7a",
+                "url": "https://api.github.com/repos/TComradeBad/QueryBuilderPhp/zipball/fa775676fc26b9bfa6a53c66dee7a2c02484b36f",
+                "reference": "fa775676fc26b9bfa6a53c66dee7a2c02484b36f",
                 "shasum": ""
             },
             "require-dev": {
@@ -759,7 +759,7 @@
                 }
             ],
             "description": "my query builder for courses",
-            "time": "2019-07-25 16:28:03"
+            "time": "2019-08-01 12:33:20"
         },
         {
             "name": "twbs/bootstrap",
@@ -814,16 +814,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.42.2",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "21707d6ebd05476854805e4f91b836531941bcd4"
+                "reference": "ef4ae447f9a3e78cc2b4c4a6db1a4e4bbf6a9103"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/21707d6ebd05476854805e4f91b836531941bcd4",
-                "reference": "21707d6ebd05476854805e4f91b836531941bcd4",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ef4ae447f9a3e78cc2b4c4a6db1a4e4bbf6a9103",
+                "reference": "ef4ae447f9a3e78cc2b4c4a6db1a4e4bbf6a9103",
                 "shasum": ""
             },
             "require": {
@@ -876,7 +876,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-06-18 15:35:16"
+            "time": "2019-07-12 06:12:11"
         }
     ],
     "packages-dev": [],

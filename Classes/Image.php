@@ -69,4 +69,6 @@ class Image
             echo $connection->errorInfo();
         }
     }
+
+
 }

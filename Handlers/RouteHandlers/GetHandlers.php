@@ -14,17 +14,13 @@ HandlerFactory::addHandler("mainpage",
             $username = $cookie["username"];
         }
 
+        $image_array = \tcb\Classes\ImageService::getImageRefArray();
         return new \React\Http\Response(200, ["Content-Type" => "text/html"],
             $dir->page("mainpage.html",
             [
                 "username" => $username,
-                'image_array'=> array(
-                "https://cdn52.zvooq.com/pic?type=release&id=6352180&size=200x200&ext=jpg",
-                "https://im0-tub-ru.yandex.net/i?id=44d7bb844c3a61de224c3590a6c279c0&n=13&exp=1",
-                "image/Heart.jpg",
-                "image/disk.jpg",
-                "image/blacksabbath.jpg"
-                )]));
+                'image_array'=> $image_array
+            ]));
     });
 
 /**
@@ -91,6 +87,9 @@ HandlerFactory::addHandler("auth-error",
                 ]));
     });
 
+/**
+ * Выход из аккаунта
+ */
 HandlerFactory::addHandler("logout",
      function (\Psr\Http\Message\ServerRequestInterface $request)
      {
@@ -104,25 +103,27 @@ HandlerFactory::addHandler("logout",
                  ["destination" => "http://192.168.33.10:8080/"]));
      });
 
+/**
+ * Страница пользователя вместе с его картинками
+ */
 HandlerFactory::addHandler("user-page",
     function (\Psr\Http\Message\ServerRequestInterface $request,$user)
     {
-
+        $auth_user = $request->getCookieParams()["username"];
         $dir = new \tcb\Classes\FileSystem();
+        $image_array = \tcb\Classes\ImageService::getImageRefArray($user);
         return new \React\Http\Response(200, ["Content-Type" => "text/html"],
             $dir->page("userpage.html",
                 [
-                    "username" => $user,
-                    'image_array'=> array(
-                        "https://cdn52.zvooq.com/pic?type=release&id=6352180&size=200x200&ext=jpg",
-                        "https://im0-tub-ru.yandex.net/i?id=44d7bb844c3a61de224c3590a6c279c0&n=13&exp=1",
-                        "/image/Heart.jpg",
-                        "/image/disk.jpg",
-                        "/image/blacksabbath.jpg"
-                    )]));
+                    "username" => $auth_user,
+                    'image_array'=> $image_array
+                ]));
     });
-HandlerFactory::addMiddlewareChain("user-page",MiddlewareFactory::getFunctionChain("auth-get"));
+HandlerFactory::addMiddlewareChain("user-page",MiddlewareFactory::getFunctionChain("user-exist"));
 
+/**
+ * Страница загрузки изображений
+ */
 HandlerFactory::addHandler("image-upload-get",
     function (\Psr\Http\Message\ServerRequestInterface $request, $user)
     {
@@ -134,4 +135,26 @@ HandlerFactory::addHandler("image-upload-get",
                 ]));
 
     });
-HandlerFactory::addMiddlewareChain("image-upload-get",MiddlewareFactory::getFunctionChain("auth-get"));
+HandlerFactory::addMiddlewareChain("image-upload-get",MiddlewareFactory::getFunctionChain("user-exist"));
+
+/**
+ * Страница с определенной картинкой
+ */
+HandlerFactory::addHandler("image-view",
+    function(\Psr\Http\Message\ServerRequestInterface $request, $user, $id)
+    {
+        $auth_user = $request->getCookieParams()["username"];
+        $dir = new \tcb\Classes\FileSystem();
+        $image = \tcb\Classes\ImageService::getImageById($id);
+
+        return new \React\Http\Response(200, ["Content-Type" => "text/html"],
+            $dir->page("image_view.html",
+                [
+                    "username" => $auth_user,
+                    "image_source" => "/image/".$image["user_name"]."/".$image["file_name"],
+                    "image_name" => $image["image_name"],
+                    "delete_button" => ($image["user_name"] == $auth_user)
+                ]));
+
+    });
+

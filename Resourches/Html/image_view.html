@@ -1,6 +1,6 @@
 {% extends "layouts/layout.html" %}
 
-{% block title %}Сервис загрузки изображений{% endblock %}
+{% block title %}Страница пользователя{% endblock %}
 
 {% block user_reg %}
 {% if username %}
@@ -18,7 +18,6 @@
         <h1 class="jumbotron-heading">Привет, {{username}}!</h1>
         <p class="lead text-muted">Ты можешь загрузить, или просмотреть свои изображения</p>
         <p>
-            <a href="/{{username}}/image_upload" class="btn btn-primary my-2">Загрузить Изображение</a>
             <a href="/{{username}}/user_profile" class="btn btn-secondary my-2">Мои изображения</a>
         </p>
     </div>
@@ -30,11 +29,17 @@
 {% endblock %}
 
 {% block imagesfield %}
+<div class="container">
+    <div class="p-3 mb-2 bg-dark text-white align-text-top">{{image_name}}</div>
+        <img  class="align-self-center" src="{{image_source}}" class="img-fluid">
+        {% if delete_button %}
+    <div class="align-bottom align-self-center">
+        <button>Удалить</button>
+    </div>
 
-{% for image in image_array %}
-{% block image %}
-{{parent()}}
-{% endblock %}
-{% endfor %}
+        {% endif %}
+
+
+</div>
 
 {% endblock %}

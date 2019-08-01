@@ -6,11 +6,12 @@ $middleware = new MiddlewareFactory();
 $middleware->addFunction(
     function (\Psr\Http\Message\ServerRequestInterface $request,$next,$name)
     {
-        $cookie = $request->getCookieParams();
-        if(!isset($cookie["username"]) or $cookie["username"] != $name)
+        $user = new \tcb\Classes\User($name,null,null);
+        if($user->nameNotExistInDB())
         {
             return new \React\Http\Response(404);
-        }else return $next($request);
+        }
+        else return $next($request);
     }
 );
-$middleware->defineFunctionChain("auth-get");
+$middleware->defineFunctionChain("user-exist");

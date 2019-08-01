@@ -56,4 +56,4 @@ HandlerFactory::addHandler("image-upload-post",
                 ["destination" => "http://192.168.33.10:8080/$user/user_profile"]));
 
     });
-HandlerFactory::addMiddlewareChain("image-upload-post",MiddlewareFactory::getFunctionChain("auth-get"));
+HandlerFactory::addMiddlewareChain("image-upload-post",MiddlewareFactory::getFunctionChain("user-exist"));
