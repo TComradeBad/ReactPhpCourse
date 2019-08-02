@@ -18,6 +18,7 @@ HandlerFactory::addHandler("mainpage",
         return new \React\Http\Response(200, ["Content-Type" => "text/html"],
             $dir->page("mainpage.html",
             [
+                "username_ref" => str_replace(" ","_",$username),
                 "username" => $username,
                 'image_array'=> $image_array
             ]));
@@ -109,12 +110,14 @@ HandlerFactory::addHandler("logout",
 HandlerFactory::addHandler("user-page",
     function (\Psr\Http\Message\ServerRequestInterface $request,$user)
     {
+        $user = str_replace("_"," ",$user);
         $auth_user = $request->getCookieParams()["username"];
         $dir = new \tcb\Classes\FileSystem();
         $image_array = \tcb\Classes\ImageService::getImageRefArray($user);
         return new \React\Http\Response(200, ["Content-Type" => "text/html"],
             $dir->page("userpage.html",
                 [
+                    "user_ref"=>str_replace(" ","_",$user),
                     "username" => $auth_user,
                     'image_array'=> $image_array
                 ]));
@@ -127,11 +130,13 @@ HandlerFactory::addMiddlewareChain("user-page",MiddlewareFactory::getFunctionCha
 HandlerFactory::addHandler("image-upload-get",
     function (\Psr\Http\Message\ServerRequestInterface $request, $user)
     {
+        $auth_user = $request->getCookieParams()["username"];
         $dir = new \tcb\Classes\FileSystem();
         return new \React\Http\Response(200, ["Content-Type" => "text/html"],
             $dir->page("image_upload.html",
                 [
-                    "username" => $user,
+                    "userref" => $user,
+                    "username" => $auth_user
                 ]));
 
     });
@@ -151,9 +156,13 @@ HandlerFactory::addHandler("image-view",
             $dir->page("image_view.html",
                 [
                     "username" => $auth_user,
-                    "image_source" => "/image/".$image["user_name"]."/".$image["file_name"],
+                    "image_source" => "/image/".
+                        str_replace(" ","_",$image["user_name"])."/".
+                        str_replace(" ","_",$image["file_name"]),
                     "image_name" => $image["image_name"],
-                    "delete_button" => ($image["user_name"] == $auth_user)
+                    "delete_button" => ($image["user_name"] == $auth_user),
+                    "image_authorref" => $user,
+                    "image_id" => $id
                 ]));
 
     });

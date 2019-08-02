@@ -15,6 +15,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
 
     $routes->get('/view[/{name}[/{id:\d+}]]',HandlerFactory::get()["image-view"]);
 
+    $routes->post('/view[/{name}[/{id:\d+}]]',HandlerFactory::get()["image-delete"]);
+
     $routes->get('/register',HandlerFactory::get()["register-get"]);
 
     $routes->post("/register",HandlerFactory::get()["register-post"]);

@@ -21,21 +21,24 @@ class Image
      */
     protected $image;
 
+    protected $id;
+
     protected $file_name;
 
     protected $image_name;
 
-    protected $owner;
+    protected $owner_id;
 
     protected $table = "users_images";
 
 
-    public function __construct(UploadedFile $file,$image_name,$owner)
+    public function __construct(UploadedFile $file,$image_name,$owner,$id = null)
     {
         $this->image = $file;
         $this->file_name = $this->image->getClientFilename();
         $this->image_name = $image_name;
         $this->owner = $owner;
+        $this->id = $id;
     }
 
     public function saveImagePushToDb()
@@ -47,12 +50,19 @@ class Image
         $connection = $db->connect();
         if($connection)
         {
-
             $qb= new QueryBuilder();
-            $query1 = $qb->select("id")->from(["react_users"])->where()
+            $query1 = $qb->select(["id","user_name"])->from(["react_users"])->where()
                 ->equals("user_name",AbstractQuery::sqlString($this->owner))->get();
             $row = $connection->query($query1);
             $row = $row->fetch();
+
+            $image_exist = $dir->imageExist(str_replace(" ","_",$row["user_name"])."/".
+                str_replace(" ","_",$this->file_name));
+
+            if($image_exist)
+            {
+                $this->file_name=md5($this->file_name);
+            }
             $query2 = $qb->insert($this->table,["image_name","file_name","owner_id"])->values(
                 [
                     AbstractQuery::sqlString($this->image_name),
@@ -62,7 +72,7 @@ class Image
             )->get();
 
             $connection->query($query2);
-            $dir->saveImage($this->image,$this->owner);
+            $dir->saveImage($this->image,$this->file_name,$this->owner);
 
         }else
         {
@@ -70,5 +80,6 @@ class Image
         }
     }
 
+   
 
 }

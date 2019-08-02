@@ -6,6 +6,7 @@ $middleware = new MiddlewareFactory();
 $middleware->addFunction(
     function (\Psr\Http\Message\ServerRequestInterface $request,$next,$name)
     {
+        $name = str_replace("_"," ",$name);
         $user = new \tcb\Classes\User($name,null,null);
         if($user->nameNotExistInDB())
         {

@@ -71,19 +71,33 @@ class FileSystem
         return file_get_contents($this->getdir("image_dir")."/$imagename");
     }
 
-    public function saveImage(UploadedFile $file,$innerdir = null)
+    public function saveImage(UploadedFile $file,$file_name,$innerdir = null)
     {
+
             $stream = $file->getStream();
             $image = $stream->getContents();
             if(isset($innerdir))
             {
+                $innerdir = str_replace(" ","_",$innerdir);
                 mkdir($this->getdir("image_dir")."/$innerdir");
-                file_put_contents($this->getdir("image_dir")."/$innerdir/".$file->getClientFilename(),$image);
+                file_put_contents($this->getdir("image_dir")."/$innerdir/".$file_name,$image);
             }else
             {
-                file_put_contents($this->getdir("image_dir")."/".$file->getClientFilename(),$image);
+                file_put_contents($this->getdir("image_dir")."/".$file_name,$image);
             }
 
+    }
+
+    public function deleteImage($filename)
+    {
+        unlink($this->getdir("image_dir")."/".$filename);
+
+    }
+
+    public function imageExist($filename)
+    {
+        echo $this->getdir("image_dir")."/".$filename;
+        return file_exists($this->getdir("image_dir")."/".$filename);
     }
 
 

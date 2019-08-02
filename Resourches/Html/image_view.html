@@ -18,7 +18,7 @@
         <h1 class="jumbotron-heading">Привет, {{username}}!</h1>
         <p class="lead text-muted">Ты можешь загрузить, или просмотреть свои изображения</p>
         <p>
-            <a href="/{{username}}/user_profile" class="btn btn-secondary my-2">Мои изображения</a>
+            <a href="/{{image_authorref}}/user_profile" class="btn btn-secondary my-2">Мои изображения</a>
         </p>
     </div>
 
@@ -31,10 +31,13 @@
 {% block imagesfield %}
 <div class="container">
     <div class="p-3 mb-2 bg-dark text-white align-text-top">{{image_name}}</div>
-        <img  class="align-self-center" src="{{image_source}}" class="img-fluid">
+        <img  src="{{image_source}}" class="img-fluid">
         {% if delete_button %}
     <div class="align-bottom align-self-center">
-        <button>Удалить</button>
+        <form method="post" action="/view/{{image_authorref}}/{{image_id}}">
+            <button type="submit">Удалить</button>
+        </form>
+
     </div>
 
         {% endif %}

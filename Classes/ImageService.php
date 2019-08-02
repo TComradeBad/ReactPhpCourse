@@ -42,8 +42,12 @@ class ImageService
 
             foreach ($result as $value)
             {
-                $image_item ["href"] = "/image/".$value['user_name']."/".$value["file_name"];
+
+                $image_item ["href"] = "/image/".
+                    str_replace(" ","_",$value['user_name'])."/".
+                    str_replace(" ","_",$value["file_name"]);
                 $image_item ["name"] = $value["image_name"];
+                $image_item ["authorref"] = str_replace(" ","_",$value["user_name"]);
                 $image_item ["author"] = $value["user_name"];
                 $image_item ["id"] = $value["id"];
                 $output [] = $image_item;
@@ -59,7 +63,7 @@ class ImageService
         $connection = $db->connect();
         if($connection)
         {
-            $query = $qbulilder->select(["image_name","file_name","react_users.user_name"])->from(self::$table)
+            $query = $qbulilder->select([self::$table.".id","image_name","file_name","react_users.user_name"])->from(self::$table)
                 ->innerJoin("react_users")->on("owner_id","react_users.id")
                 ->where()->equals(self::$table.".id",$id)->get();
             $row = $connection->query($query);
@@ -67,5 +71,24 @@ class ImageService
 
         }
         return $row;
+    }
+
+    public static function deleteImageById($id)
+    {
+        $dir = new FileSystem();
+        $db = new DatabaseService();
+        $qbulilder = new QueryBuilder();
+        $row = self::getImageById($id);
+
+        $connection = $db->connect();
+
+        if($connection)
+        {
+            $query = $qbulilder->delete()->from([self::$table])->where()->equals("id",$id)->get();
+            $connection->query($query);
+            $dir->deleteImage(str_replace(" ","_",$row["user_name"])."/".$row["file_name"]);
+
+        }
+
     }
 }
