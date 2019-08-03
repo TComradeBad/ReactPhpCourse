@@ -53,8 +53,8 @@
 <form class="form-signin" method="post" action="/auth">
     <img class="mb-4" src="image/camera.jpg" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Авторизация пользователя</h1>
-    <label for="username" class="sr-only">User name</label>
-    <input type="text" id="username" name="username" class="form-control" placeholder="User Name" required autofocus>
+    <label for="username" class="sr-only" >User name</label>
+    <input type="text" id="username" name="username" class="form-control" placeholder="User Name" required autofocus onkeyup="var yratext=/['А-я',':']/; if(yratext.test(this.value)) this.value=''">
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Authentication</button>

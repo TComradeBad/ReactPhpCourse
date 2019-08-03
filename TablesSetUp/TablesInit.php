@@ -21,7 +21,7 @@ if($connection)
         ->integer('id',"NOT NULL AUTO_INCREMENT PRIMARY KEY")
         ->varchar("image_name",255,"NOT NULL")
         ->varchar("file_name",255,"NOT NULL")
-        ->integer("views_count")
+        ->integer("views_count", "NOT NULL DEFAULT 0")
         ->integer("owner_id","NOT NULL")
         ->get();
 

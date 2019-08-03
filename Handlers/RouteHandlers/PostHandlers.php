@@ -70,3 +70,4 @@ HandlerFactory::addHandler("image-delete",
                 ["destination" => "http://192.168.33.10:8080/$user/user_profile"]));
 
     });
+HandlerFactory::addMiddlewareChain("image-delete",MiddlewareFactory::getFunctionChain("delete-access"));

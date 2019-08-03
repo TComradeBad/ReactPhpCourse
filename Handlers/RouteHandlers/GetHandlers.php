@@ -150,6 +150,7 @@ HandlerFactory::addHandler("image-view",
     {
         $auth_user = $request->getCookieParams()["username"];
         $dir = new \tcb\Classes\FileSystem();
+        \tcb\Classes\ImageService::increaseViewsCountById($id);
         $image = \tcb\Classes\ImageService::getImageById($id);
 
         return new \React\Http\Response(200, ["Content-Type" => "text/html"],
@@ -166,4 +167,4 @@ HandlerFactory::addHandler("image-view",
                 ]));
 
     });
-
+HandlerFactory::addMiddlewareChain("image-view",MiddlewareFactory::getFunctionChain("image-exist"));

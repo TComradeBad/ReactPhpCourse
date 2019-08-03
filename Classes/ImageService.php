@@ -25,12 +25,12 @@ class ImageService
         {
             if(isset($images_owner))
             {
-                $query = $qbulilder->select([self::$table.".id","image_name","file_name","react_users.user_name"])
+                $query = $qbulilder->select([self::$table.".id","image_name","file_name","react_users.user_name","views_count"])
                     ->from(self::$table)->innerJoin("react_users")->on("owner_id","react_users.id")
                     ->where()->equals("user_name",AbstractQuery::sqlString($images_owner))->get();
             }else
             {
-                $query = $qbulilder->select([self::$table.".id","image_name","file_name","react_users.user_name"])
+                $query = $qbulilder->select([self::$table.".id","image_name","file_name","react_users.user_name","views_count"])
                     ->from(self::$table)->innerJoin("react_users")->on("owner_id","react_users.id")->get();
             }
 
@@ -50,6 +50,7 @@ class ImageService
                 $image_item ["authorref"] = str_replace(" ","_",$value["user_name"]);
                 $image_item ["author"] = $value["user_name"];
                 $image_item ["id"] = $value["id"];
+                $image_item ["views_count"] = $value["views_count"];
                 $output [] = $image_item;
             }
         }
@@ -63,7 +64,7 @@ class ImageService
         $connection = $db->connect();
         if($connection)
         {
-            $query = $qbulilder->select([self::$table.".id","image_name","file_name","react_users.user_name"])->from(self::$table)
+            $query = $qbulilder->select([self::$table.".id","image_name","file_name","react_users.user_name","views_count"])->from(self::$table)
                 ->innerJoin("react_users")->on("owner_id","react_users.id")
                 ->where()->equals(self::$table.".id",$id)->get();
             $row = $connection->query($query);
@@ -90,5 +91,25 @@ class ImageService
 
         }
 
+    }
+
+    public static function increaseViewsCountById($id)
+    {
+
+        $db = new DatabaseService();
+        $qbulilder = new QueryBuilder();
+        $row = self::getImageById($id);
+
+        $connection = $db->connect();
+
+        if($connection)
+        {
+            $row["views_count"] = $row["views_count"] + 1;
+            $query = $qbulilder->update(self::$table)->set(["views_count"=>$row["views_count"]])->where()->equals("id",$id)->get();
+            $connection->query($query);
+
+
+
+        }
     }
 }
