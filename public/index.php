@@ -2,11 +2,7 @@
 
 require __DIR__ . "/../vendor/autoload.php";
 
-$dotenv = Dotenv\Dotenv::create(__DIR__ . "/../configs/ENV/", "databaseConfig.env");
-$dotenv->overload();
-
-\tcb\Classes\DatabaseService::initOptions(include __DIR__ . "/../configs/databaseConfig.php");
-\tcb\Classes\FileSystem::initDirectories(include __DIR__ . "/../configs/directoryConfig.php");
+\tcb\Classes\Initializer::InitAll($url,"public");
 
 require __DIR__ . "/../Routes/Routes.php";
 
@@ -22,7 +18,7 @@ $server = new \React\Http\Server(function (\Psr\Http\Message\ServerRequestInterf
     }
 });
 
-$socket = new \React\Socket\Server("192.168.33.10:8080", $loop);
+$socket = new \React\Socket\Server($url, $loop);
 
 $server->listen($socket);
 $loop->run();
