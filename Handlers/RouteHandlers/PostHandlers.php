@@ -3,7 +3,9 @@
 use tcb\Classes\HandlerFactory;
 use tcb\Classes\MiddlewareFactory;
 
-
+/**
+ * Обработка post запроса с регистрации
+ */
 HandlerFactory::addHandler("register-post", function (\Psr\Http\Message\ServerRequestInterface $request) {
 
     $dir = new \tcb\Classes\FileSystem();
@@ -57,6 +59,9 @@ HandlerFactory::addHandler("image-upload-post",
     });
 HandlerFactory::addMiddlewareChain("image-upload-post", MiddlewareFactory::getFunctionChain("user-exist"));
 
+/**
+ * Обработка запроса на удаление картинки
+ */
 HandlerFactory::addHandler("image-delete",
     function (\Psr\Http\Message\ServerRequestInterface $request, $user, $id) {
         $dir = new \tcb\Classes\FileSystem();
