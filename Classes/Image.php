@@ -42,17 +42,26 @@ class Image
         $this->id = $id;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function saveImagePushToDb()
     {
 
         $dir = new FileSystem();
         $db = new DatabaseService();
 
+
         $connection = $db->connect();
-        if ($connection) {
+        if (!$connection) {
+            throw new \Exception("Failed to connect to Database" . $connection->errorInfo());
+
+        } else {
             $qb = new QueryBuilder();
+
             $query1 = $qb->select(["id", "user_name"])->from(["react_users"])->where()
                 ->equals("user_name", AbstractQuery::sqlString($this->owner))->get();
+
             $row = $connection->query($query1);
             $row = $row->fetch();
 
@@ -72,9 +81,6 @@ class Image
 
             $connection->query($query2);
             $dir->saveImage($this->image, $this->file_name, $this->owner);
-
-        } else {
-            echo $connection->errorInfo();
         }
     }
 

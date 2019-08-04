@@ -15,14 +15,20 @@ class ImageService
 {
     protected static $table = "users_images";
 
-
+    /**
+     * @param null $images_owner
+     * @return array
+     * @throws \Exception
+     */
     public static function getImageRefArray($images_owner = null)
     {
         $db = new DatabaseService();
         $qbulilder = new QueryBuilder();
         $connection = $db->connect();
         $output = array();
-        if ($connection) {
+        if (!$connection) {
+            throw new \Exception("Failed to connect to Database " . $connection->errorInfo());
+        } else {
             if (isset($images_owner)) {
                 $query = $qbulilder->select([self::$table . ".id", "image_name", "file_name", "react_users.user_name", "views_count"])
                     ->from(self::$table)->innerJoin("react_users")->on("owner_id", "react_users.id")
@@ -53,23 +59,33 @@ class ImageService
         return $output;
     }
 
+    /**
+     * @param $id
+     * @return false|mixed|\PDOStatement
+     * @throws \Exception
+     */
     public static function getImageById($id)
     {
         $db = new DatabaseService();
         $qbulilder = new QueryBuilder();
         $connection = $db->connect();
-        if ($connection) {
+        if (!$connection) {
+            throw new \Exception("Failed to connect to Database " . $connection->errorInfo());
+        } else {
             $query = $qbulilder->select([self::$table . ".id", "image_name", "file_name", "react_users.user_name", "views_count"])
                 ->from(self::$table)
                 ->innerJoin("react_users")->on("owner_id", "react_users.id")
                 ->where()->equals(self::$table . ".id", $id)->get();
             $row = $connection->query($query);
             $row = $row->fetch();
-
         }
         return $row;
     }
 
+    /**
+     * @param $id
+     * @throws \Exception
+     */
     public static function deleteImageById($id)
     {
         $dir = new FileSystem();
@@ -79,29 +95,36 @@ class ImageService
 
         $connection = $db->connect();
 
-        if ($connection) {
+        if (!$connection) {
+            throw new \Exception("Failed to connect to Database " . $connection->errorInfo());
+
+        } else {
             $query = $qbulilder->delete()->from([self::$table])->where()->equals("id", $id)->get();
             $connection->query($query);
             $dir->deleteImage(str_replace(" ", "_", $row["user_name"]) . "/" . $row["file_name"]);
-
         }
 
     }
 
+    /**
+     * @param $id
+     * @throws \Exception
+     */
     public static function increaseViewsCountById($id)
     {
-
         $db = new DatabaseService();
         $qbulilder = new QueryBuilder();
         $row = self::getImageById($id);
 
         $connection = $db->connect();
 
-        if ($connection) {
+        if (!$connection) {
+            throw new \Exception("Failed to connect to Database " . $connection->errorInfo());
+
+        } else {
             $row["views_count"] = $row["views_count"] + 1;
             $query = $qbulilder->update(self::$table)->set(["views_count" => $row["views_count"]])->where()->equals("id", $id)->get();
             $connection->query($query);
-
 
         }
     }

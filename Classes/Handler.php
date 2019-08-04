@@ -9,8 +9,6 @@
 namespace tcb\Classes;
 
 
-use function PHPSTORM_META\type;
-
 class Handler
 {
     protected $function;
@@ -37,12 +35,13 @@ class Handler
 
             $func = $this->function;
             if (!empty($params)) {
-                return $func($request, ...array_values($params));
+                $result = $func($request, ...array_values($params));
 
             } else {
-                return $func($request);
+                $result = $func($request);
             }
 
-        } else return $result;
+        }
+        return $result;
     }
 }

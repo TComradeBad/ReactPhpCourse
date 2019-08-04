@@ -96,7 +96,6 @@ class FileSystem
 
     public function imageExist($filename)
     {
-        echo $this->getdir("image_dir") . "/" . $filename;
         return file_exists($this->getdir("image_dir") . "/" . $filename);
     }
 

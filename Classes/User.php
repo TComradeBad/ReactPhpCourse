@@ -2,6 +2,7 @@
 
 namespace tcb\Classes;
 
+
 use tcb\Classes\DatabaseService;
 use tcbQB\QueryBuilder\AbstractQuery;
 use tcbQB\QueryBuilder\QueryBuilder;
@@ -48,57 +49,69 @@ class User
         }
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public function nameNotExistInDB()
     {
         $builder = new QueryBuilder();
         $db = new DatabaseService();
         $connection = $db->connect();
-        if ($connection) {
+        if (!$connection) {
+            throw new \Exception("Failed to connect to Database " . $connection->errorInfo());
+        } else {
             $query = $builder->select("user_name")->from(['react_users'])->where()
                 ->equals("user_name", AbstractQuery::sqlString($this->username))->get();
             $row = $connection->query($query);
             $row = $row->fetch();
-            if (empty($row['user_name'])) {
-                return true;
-            } else {
-                return false;
-            }
+            return empty($row['user_name']);
+
         }
 
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public function emailNotExistInDB()
     {
         $builder = new QueryBuilder();
         $db = new DatabaseService();
         $connection = $db->connect();
-        if ($connection) {
+        if (!$connection) {
+            throw new \Exception("Failed to connect to Database " . $connection->errorInfo());
+
+        } else {
             $query = $builder->select("email")->from(['react_users'])->where()
                 ->equals("email", AbstractQuery::sqlString($this->email))->get();
             $row = $connection->query($query);
             $row = $row->fetch();
-            if (empty($row['email'])) {
-                return true;
-            } else {
-                return false;
-            }
+            return empty($row['email']);
+
         }
 
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public function vertifyPassword()
     {
         $builder = new QueryBuilder();
         $db = new DatabaseService();
         $connection = $db->connect();
-        if ($connection) {
+        if (!$connection) {
+            throw new \Exception("Failed to connect to Database " . $connection->errorInfo());
+        } else {
+
             $query = $builder->select("password")->from(['react_users'])->where()
                 ->equals("user_name", AbstractQuery::sqlString($this->username))->get();
             $row = $connection->query($query);
             $row = $row->fetch();
             return password_verify($this->password, $row["password"]);
-        } else {
-            return false;
         }
 
     }
