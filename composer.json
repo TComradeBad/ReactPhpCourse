@@ -16,7 +16,8 @@
     "twig/twig": "1.*",
     "twbs/bootstrap": "4.3.1",
     "ext-pdo": "^0.0.0",
-    "tcomradebad/querybuilder": "dev-master"
+    "tcomradebad/querybuilder": "dev-master",
+    "vlucas/phpdotenv": "^3.4"
 
   },
   "autoload": {

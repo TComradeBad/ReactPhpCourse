@@ -14,6 +14,7 @@ use React\Http\Io\UploadedFile;
 use tcb\Classes\DatabaseService;
 use tcbQB\QueryBuilder\QueryBuilder;
 use tcbQB\QueryBuilder\AbstractQuery;
+
 class Image
 {
     /**
@@ -32,7 +33,7 @@ class Image
     protected $table = "users_images";
 
 
-    public function __construct(UploadedFile $file,$image_name,$owner,$id = null)
+    public function __construct(UploadedFile $file, $image_name, $owner, $id = null)
     {
         $this->image = $file;
         $this->file_name = $this->image->getClientFilename();
@@ -44,26 +45,24 @@ class Image
     public function saveImagePushToDb()
     {
 
-        $dir= new FileSystem();
+        $dir = new FileSystem();
         $db = new DatabaseService();
 
         $connection = $db->connect();
-        if($connection)
-        {
-            $qb= new QueryBuilder();
-            $query1 = $qb->select(["id","user_name"])->from(["react_users"])->where()
-                ->equals("user_name",AbstractQuery::sqlString($this->owner))->get();
+        if ($connection) {
+            $qb = new QueryBuilder();
+            $query1 = $qb->select(["id", "user_name"])->from(["react_users"])->where()
+                ->equals("user_name", AbstractQuery::sqlString($this->owner))->get();
             $row = $connection->query($query1);
             $row = $row->fetch();
 
-            $image_exist = $dir->imageExist(str_replace(" ","_",$row["user_name"])."/".
-                str_replace(" ","_",$this->file_name));
+            $image_exist = $dir->imageExist(str_replace(" ", "_", $row["user_name"]) . "/" .
+                str_replace(" ", "_", $this->file_name));
 
-            if($image_exist)
-            {
-                $this->file_name=md5($this->file_name);
+            if ($image_exist) {
+                $this->file_name = md5($this->file_name);
             }
-            $query2 = $qb->insert($this->table,["image_name","file_name","owner_id"])->values(
+            $query2 = $qb->insert($this->table, ["image_name", "file_name", "owner_id"])->values(
                 [
                     AbstractQuery::sqlString($this->image_name),
                     AbstractQuery::sqlString($this->file_name),
@@ -72,14 +71,12 @@ class Image
             )->get();
 
             $connection->query($query2);
-            $dir->saveImage($this->image,$this->file_name,$this->owner);
+            $dir->saveImage($this->image, $this->file_name, $this->owner);
 
-        }else
-        {
+        } else {
             echo $connection->errorInfo();
         }
     }
 
-   
 
 }

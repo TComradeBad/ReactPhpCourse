@@ -3,7 +3,6 @@
 namespace tcb\Classes;
 
 
-
 class HandlerFactory
 {
     /**
@@ -15,23 +14,23 @@ class HandlerFactory
     protected static $function;
 
 
-    public static function addHandler($handlerName,callable $handlerFunction)
+    public static function addHandler($handlerName, callable $handlerFunction)
     {
         self::$handlers[$handlerName] = $handlerFunction;
 
     }
 
 
-    public static function get()
+    public static function get($name)
     {
-        return self::$handlers;
+        return self::$handlers[$name];
     }
 
     public static function addMiddlewareChain($name, $middleware_array)
     {
         $middleware = MiddlewareFactory::createMiddlewareChain($middleware_array);
-        $handler = new Handler(HandlerFactory::get()[$name],$middleware);
-        HandlerFactory::addHandler($name,$handler);
+        $handler = new Handler(HandlerFactory::get($name), $middleware);
+        HandlerFactory::addHandler($name, $handler);
 
     }
 }

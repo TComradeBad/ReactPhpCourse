@@ -1,16 +1,18 @@
 <?php
+
 return [
-    "db_type" => "mysql",
 
-    "db_name" => "reactsite",
+    "db_type" => getenv("DB_TYPE"),
 
-    "host" => "127.0.0.1",
+    "db_name" => getenv("DB_NAME"),
 
-    "user" => "reactsite_user",
+    "host" => getenv("HOST"),
 
-    "password" => "bye_bye_american_pie",
+    "user" => getenv("USER"),
 
-    "charset" => "utf8"
+    "password" => getenv("PASSWORD"),
+
+    "charset" => getenv("CHARSET")
+
 
 ];
-

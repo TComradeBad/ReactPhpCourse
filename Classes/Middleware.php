@@ -35,15 +35,13 @@ class Middleware
      * @param mixed ...$params
      * @return mixed
      */
-    public function __invoke($request, callable $next = null,... $params)
+    public function __invoke($request, callable $next = null, ... $params)
     {
         $func = $this->function;
-        if(empty($params))
-        {
-            return $func($request,$this->next_function);
-        }else
-        {
-            return $func($request,$this->next_function,...array_values($params));
+        if (empty($params)) {
+            return $func($request, $this->next_function);
+        } else {
+            return $func($request, $this->next_function, ...array_values($params));
         }
 
 
@@ -52,15 +50,15 @@ class Middleware
     public function __construct(callable $function = null, Middleware $first_middleware = null)
     {
         $this->function = $function;
-        if(isset($first_middleware))
-        {
+        if (isset($first_middleware)) {
             $this->first_middleware = $first_middleware;
-        }else
-        {
+        } else {
             $this->first_middleware = $this;
         }
         $this->first_middleware->last_middleware = $this;
-        $this->next_function = function(){return new Middleware();};
+        $this->next_function = function () {
+            return new Middleware();
+        };
 
 
     }
@@ -72,7 +70,7 @@ class Middleware
      */
     public function addNext(callable $function)
     {
-        $this->next_function = new Middleware($function,$this->first_middleware);
+        $this->next_function = new Middleware($function, $this->first_middleware);
 
         return $this->next_function;
     }
@@ -81,7 +79,7 @@ class Middleware
      * @param string $name
      * @param Middleware $middleware
      */
-    public static function defineChain($name ,Middleware $middleware)
+    public static function defineChain($name, Middleware $middleware)
     {
         self::$middlewareCollection [$name] = $middleware->getFirstMiddleware();
     }
@@ -126,7 +124,7 @@ class Middleware
      */
     public function setFunction(callable $func)
     {
-       $this->function = $func;
+        $this->function = $func;
     }
 
 }

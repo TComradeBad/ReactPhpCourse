@@ -7,6 +7,7 @@
  */
 
 namespace tcb\Classes;
+
 use tcb\Classes\Middleware;
 
 class MiddlewareFactory
@@ -20,6 +21,7 @@ class MiddlewareFactory
         $this->function_chain [] = $func;
         return $this;
     }
+
     public static function addFunctionToChain($name, callable $func)
     {
         self::$chain_collection [$name] [] = $func;
@@ -30,8 +32,7 @@ class MiddlewareFactory
         $mid = new \tcb\Classes\Middleware();
         $mid->setFunction($function_chain[0]);
         $mid2 = $mid;
-        for ($i=1 ; $i < count($function_chain); $i++)
-        {
+        for ($i = 1; $i < count($function_chain); $i++) {
             $mid2 = $mid2->addNext($function_chain[$i]);
         }
         return $mid;

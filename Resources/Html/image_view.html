@@ -31,8 +31,8 @@
 {% block imagesfield %}
 <div class="container">
     <div class="p-3 mb-2 bg-dark text-white align-text-top">{{image_name}}</div>
-        <img  src="{{image_source}}" class="img-fluid">
-        {% if delete_button %}
+    <img src="{{image_source}}" class="img-fluid">
+    {% if delete_button %}
     <div class="align-bottom align-self-center">
         <form method="post" action="/view/{{image_authorref}}/{{image_id}}">
             <button type="submit">Удалить</button>
@@ -40,7 +40,7 @@
 
     </div>
 
-        {% endif %}
+    {% endif %}
 
 
 </div>

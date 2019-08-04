@@ -4,21 +4,24 @@ namespace tcb\Classes;
 
 class DatabaseService
 {
-    protected $dbOptions = [];
+    protected static $dbOptions = [];
 
     public function __construct()
     {
-        $this->dbOptions = include __DIR__."/../configs/databaseConfig.php";
+
+    }
+
+    public static function initOptions($config)
+    {
+        self::$dbOptions = $config;
     }
 
     public function connect()
     {
-        $dsn = $this->dbOptions['db_type'].":host=".$this->dbOptions['host'].";dbname=".$this->dbOptions['db_name'].";charset=".$this->dbOptions['charset'].";";
-        $connection = new \PDO($dsn,$this->dbOptions['user'],$this->dbOptions['password']);
+        $dsn = self::$dbOptions['db_type'] . ":host=" . self::$dbOptions['host'] . ";dbname=" . self::$dbOptions['db_name'] . ";charset=" . self::$dbOptions['charset'] . ";";
+        $connection = new \PDO($dsn, self::$dbOptions['user'], self::$dbOptions['password']);
         return $connection;
     }
-
-
 
 
 }

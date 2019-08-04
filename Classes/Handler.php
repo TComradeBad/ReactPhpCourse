@@ -17,35 +17,32 @@ class Handler
 
     protected $middleware;
 
-    public function __construct(callable  $function, Middleware $middleware = null)
+    public function __construct(callable $function, Middleware $middleware = null)
     {
         $this->function = $function;
         $this->middleware = $middleware;
     }
 
-    public function __invoke($request,...$params)
-    {   $mid = $this->middleware;
-        if(!empty($params))
-        {
-            $result = $mid($request,null,...array_values($params));
-        }else
-        {
+    public function __invoke($request, ...$params)
+    {
+        $mid = $this->middleware;
+        if (!empty($params)) {
+            $result = $mid($request, null, ...array_values($params));
+        } else {
             $result = $mid($request);
         }
 
 
-        if(get_class($result)=="tcb\Classes\Middleware")
-        {
+        if ($result instanceof Middleware) {
+
             $func = $this->function;
-            if(!empty($params))
-            {
-                return $func($request,...array_values($params));
+            if (!empty($params)) {
+                return $func($request, ...array_values($params));
 
-            }else
-                {
+            } else {
                 return $func($request);
-                }
+            }
 
-        }else return $result;
+        } else return $result;
     }
 }
